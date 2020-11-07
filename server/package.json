@@ -5,16 +5,18 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "concurrently \"npm start\" \"npm start --prefix ../client\""
+    "dev": "concurrently \"nodemon start\" \"npm start --prefix ../client\""
   },
   "author": "Conor Moening",
   "license": "GPLv3",
   "dependencies": {
     "concurrently": "^5.3.0",
     "express": "^4.17.1",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "novelcovid": "^3.0.0"
   },
   "devDependencies": {
+    "nodemon": "^2.0.6",
     "eslint": "^7.12.1",
     "eslint-config-google": "^0.14.0",
     "eslint-config-standard": "^16.0.1",
