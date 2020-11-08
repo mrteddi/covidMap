@@ -1,0 +1,7 @@
+.infoCircle {
+    color: white;
+    background: red;
+    padding: 20px 10px;
+    display: inline-block;
+    border-radius: 100%;
+}
