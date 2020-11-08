@@ -29,7 +29,7 @@ app.get(`/api/downloadData`, (req, res) => {
       .then((data) => {
         const keys = Object.keys(data[0]);
         data.forEach((stateData) => {
-          let query = `insert into states set `;
+          let query = `insert into caseData set `;
           keys.forEach((key) => {
             query += `${key} = "${stateData[key]}", `;
           });
@@ -42,10 +42,19 @@ app.get(`/api/downloadData`, (req, res) => {
 });
 
 app.get(`/api/getStateData`, (req, res) => {
-  const query = `select * from states where state=${req.query.state};`;
-  db.query( query, (err, result) => {
-    res.send( result );
-  });
+  if (req.query.location) {
+    const query = `select * from caseData 
+        where location="${req.query.location}";`;
+    db.query( query, (err, result) => {
+      res.send( result );
+    });
+  } else {
+    const query = `select caseData.*, l.lat, l.lng from caseData right join 
+        latLng l on (caseData.location=l.location) where date="2020-10-06";`;
+    db.query( query, (err, result) => {
+      res.send( result );
+    });
+  }
 });
 
 const port = 5000;
