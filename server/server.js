@@ -27,15 +27,21 @@ db.connect((err) => {
 app.get(`/api/downloadData`, (req, res) => {
   covidAPI.nyt.states()
       .then((data) => {
-        const keys = Object.keys(data[0]);
+        // const keys = Object.keys(data[0]);
         data.forEach((stateData) => {
           let query = `insert into caseData set `;
-          keys.forEach((key) => {
-            query += `${key} = "${stateData[key]}", `;
-          });
-          query = query.slice(0, -2) + ';';
+          query += `date = "${stateData['date']}",`;
+          query += `location = "${stateData['state']}",`;
+          query += `fips = "${stateData['fips']}",`;
+          query += `cases = "${stateData['cases']}",`;
+          query += `deaths = "${stateData['deaths']}",`;
+          query += `updated = "${stateData['updated']}";`;
+          //   keys.forEach((key) => {
+          //     query += `${key} = "${stateData[key]}", `;
+          //   });
+          //   query = query.slice(0, -2) + ';';
           db.query(query, (err, result) => {
-            // console.log(err);
+            console.log(err);
           });
         });
       });
@@ -50,7 +56,7 @@ app.get(`/api/getStateData`, (req, res) => {
     });
   } else {
     const query = `select caseData.*, l.lat, l.lng from caseData right join 
-        latLng l on (caseData.location=l.location) where date="2020-10-06";`;
+        latLng l on (caseData.location=l.location) where date="2020-11-07";`;
     db.query( query, (err, result) => {
       res.send( result );
     });

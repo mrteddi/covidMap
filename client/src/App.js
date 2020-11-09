@@ -59,7 +59,7 @@ class App extends Component {
                 lng = {location['lng']}
                 title = {location['location']}
                 info = {location['cases']}
-                key= {location['updated']}
+                key= {location['id']}
               />,
             )}
           </GoogleMapReact>
