@@ -56,7 +56,8 @@ app.get(`/api/getStateData`, (req, res) => {
     });
   } else {
     const query = `select caseData.*, l.lat, l.lng from caseData right join 
-        latLng l on (caseData.location=l.location) where date="2020-11-07";`;
+        latLng l on (caseData.location=l.location) 
+        where date=${req.query.date};`;
     db.query( query, (err, result) => {
       res.send( result );
     });

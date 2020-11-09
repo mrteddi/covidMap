@@ -15,18 +15,28 @@ class InfoCircle extends Component {
   constructor(props) {
     super(props);
   }
+
+  /**
+   * Changes a infoCircle into new style
+   */
+  changeType() {
+    const tmp = !this.props.data.type;
+    this.setState({
+      type: tmp,
+    });
+  }
   /**
      * Renders a circle with relevant information from the area's cases
      * @return {void}
      */
   render() {
     return (
-      <div className="infoCircle">
+      <div className={this.props.data.type ? 'infoBox' : 'infoCircle'}>
         <div>
-          {this.props.title}
+          {this.props.data.location}
         </div>
         <div>
-          {this.props.info}
+          {this.props.data.cases}
         </div>
       </div>
     );
@@ -34,8 +44,7 @@ class InfoCircle extends Component {
 }
 
 InfoCircle.propTypes = {
-  title: PropTypes.string,
-  info: PropTypes.string,
+  data: PropTypes.object,
 };
 
 export default InfoCircle;
