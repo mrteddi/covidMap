@@ -16,6 +16,14 @@ class InfoCircle extends Component {
     super(props);
   }
 
+
+  /**
+   * Test function for div specific onClick
+   */
+  _onClick() {
+    console.log('..');
+  }
+
   /**
    * Changes a infoCircle into new style
    */
@@ -31,7 +39,8 @@ class InfoCircle extends Component {
      */
   render() {
     return (
-      <div className={this.props.data.type ? 'infoBox' : 'infoCircle'}>
+      <div onClick={this._onClick}
+        className={this.props.data.type ? 'infoCircle' : 'infoCircle'}>
         <div>
           {this.props.data.location}
         </div>

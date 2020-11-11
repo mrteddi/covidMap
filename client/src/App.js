@@ -20,6 +20,8 @@ class App extends Component {
     };
   }
 
+  //   const [selectedLocation, setSelectedLocation ] = React.useState('');
+
   /**
    * Catch the main component mounting, so cases data can be
    * downloaded on page load
@@ -31,7 +33,7 @@ class App extends Component {
           let index = 0;
           res.forEach((location) => {
             const tmp = this.state.locations;
-            location['type'] = 0;
+            location['type'] = 1;
             location['index'] = index;
             index++;
             tmp.push(location);
@@ -46,10 +48,7 @@ class App extends Component {
    *
    */
   handleChange() {
-    // this.type = 1;
-    // this.setState({
-    //   type: 1,
-    // });
+    console.log( this );
   }
 
   /**
@@ -59,11 +58,11 @@ class App extends Component {
    * @return {void}
    */
   handleClick(key, childProps) {
-    // console.log(key);
-    // console.log(childProps);
+    console.log(childProps);
     // const tmp = !childProps.data.type;
-    childProps.updateInfo();
-    // console.log(this);
+    // childProps.updateInfo();
+    console.log(this.state);
+
     // tmp2[childProps.data.index] = tmp;
     // this.setState({
     //   locations: tmp2,
@@ -94,6 +93,27 @@ class App extends Component {
     }
   }
 
+  /**
+   * a
+   * @param {obj} locs
+   * @return {InfoCircle}
+   */
+  dot(locs) {
+    // const [dotType, setdotType] = React.useState('');
+    // setdotType('hello');
+    // console.log( dotType );
+    return (
+      this.state.locations.map( (location) =>
+        <InfoCircle
+          lat = {location['lat']}
+          lng = {location['lng']}
+          key = {location['id']}
+          // updateInfo = {this.handleChange}
+          data = {location}
+        />,
+      )
+    );
+  }
 
   /**
    * Render Google Map and iterate through each case
@@ -107,16 +127,16 @@ class App extends Component {
           <GoogleMapReact
             bootstrapURLKeys={{key: googleAPI.key}}
             defaultCenter={{lat: 38.3862206, lng: -121.2647843}}
-            defaultZoom={11}
+            defaultZoom={5}
             onChildClick={this.handleClick}
           >
-            {this.state.locations.map( (location) =>
-
+            {/* {this.dot(this.state.locations)} */}
+            { this.state.locations.map( (location) =>
               <InfoCircle
                 lat = {location['lat']}
                 lng = {location['lng']}
                 key = {location['id']}
-                updateInfo = {this.handleChange}
+                // updateInfo = {this.handleChange}
                 data = {location}
               />,
             )}
