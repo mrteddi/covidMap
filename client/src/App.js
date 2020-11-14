@@ -17,6 +17,9 @@ class App extends Component {
     super();
     this.state = {
       locations: [],
+      caseNumbers: [],
+      minNum: 0,
+      maxNum: 0,
     };
   }
 
@@ -41,6 +44,21 @@ class App extends Component {
               locations: tmp,
             });
           });
+        })
+        .then( (res) => {
+          const tmp = this.state.locations;
+
+          const sorted = tmp.sort( (a, b) => {
+            return a['cases'] - b['cases'];
+          });
+
+          for ( let i = 0; i < sorted.length; i++ ) {
+            sorted[i]['index'] = i;
+          }
+
+          this.setState({
+            locations: sorted,
+          });
         });
   }
 
@@ -59,14 +77,13 @@ class App extends Component {
    */
   handleClick(key, childProps) {
     console.log(childProps);
-    // const tmp = !childProps.data.type;
-    // childProps.updateInfo();
-    console.log(this.state);
+    const tmp = !childProps.data.type;
 
-    // tmp2[childProps.data.index] = tmp;
-    // this.setState({
-    //   locations: tmp2,
-    // });
+    const tmp2 = this.state.locations;
+    tmp2[childProps.data.index]['type'] = tmp;
+    this.setState({
+      locations: tmp2,
+    });
   }
 
   /**
@@ -128,7 +145,7 @@ class App extends Component {
             bootstrapURLKeys={{key: googleAPI.key}}
             defaultCenter={{lat: 38.3862206, lng: -121.2647843}}
             defaultZoom={5}
-            onChildClick={this.handleClick}
+            onChildClick={this.handleClick.bind(this)}
           >
             {/* {this.dot(this.state.locations)} */}
             { this.state.locations.map( (location) =>
