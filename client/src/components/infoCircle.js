@@ -16,16 +16,6 @@ class InfoCircle extends Component {
     super(props);
   }
 
-
-  /**
-   * Changes a infoCircle into new style
-   */
-  changeType() {
-    const tmp = !this.props.data.type;
-    this.setState({
-      type: tmp,
-    });
-  }
   /**
      * Renders a circle with relevant information from the area's cases
      * @return {void}
