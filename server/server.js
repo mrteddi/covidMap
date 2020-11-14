@@ -64,6 +64,14 @@ app.get(`/api/getStateData`, (req, res) => {
   }
 });
 
+app.get(`/api/getDates`, (req, res) => {
+  const query = `select distinct 
+  date_format(date,'%Y-%m-%d') as date from caseData;`;
+  db.query(query, (err, result) => {
+    res.send(result);
+  });
+});
+
 const port = 5000;
 
 app.listen(port, () => `Server running on port ${port}`);

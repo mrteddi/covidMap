@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import GoogleMapReact from 'google-map-react';
 import InfoCircle from './components/infoCircle.js';
 import InfoBox from './components/infoBox.js';
+import {Slider} from '@material-ui/core';
 import googleAPI from './key.json';
 import './App.css';
 
@@ -18,6 +19,8 @@ class App extends Component {
     super();
     this.state = {
       locations: [],
+      dates: [],
+      maxDateVal: 0,
     };
   }
 
@@ -58,6 +61,26 @@ class App extends Component {
         .then( (res) => res.json() )
         .then( (res) => {
           this.initData(res);
+        })
+        .then( () => {
+          fetch(`/api/getDates`)
+              .then( (res) => res.json() )
+              .then( (res) => {
+                const tmp = [];
+                let count = 0;
+                res.forEach( (day) => {
+                  const tmp2 = {
+                    value: count,
+                    label: day['date'].slice(5),
+                  };
+                  tmp.push(tmp2);
+                  count++;
+                });
+                this.setState({
+                  dates: tmp,
+                  maxDateVal: count,
+                });
+              });
         });
   }
 
@@ -80,15 +103,15 @@ class App extends Component {
 
   /**
    * @param {object} e
+   * @param {string} value
    */
-  dateSelect(e) {
-    if ( e.key === 'Enter' ) {
-      fetch(`/api/getStateData?date="${e.target.value}"`)
-          .then( (res) => res.json() )
-          .then( (res) => {
-            this.initData(res);
-          });
-    }
+  dateSelect(e, value) {
+    value = this.state.dates[value]['label'];
+    fetch(`/api/getStateData?date="2020-${value}"`)
+        .then( (res) => res.json() )
+        .then( (res) => {
+          this.initData(res);
+        });
   }
 
   /**
@@ -122,7 +145,18 @@ class App extends Component {
               />,
             )}
           </GoogleMapReact>
-          <input onKeyDown={ (e) => this.dateSelect(e) }/>
+          <div style={{marginLeft: 50, marginRight: 50}}>
+            <Slider
+              key={`1`}
+              step={null}
+              max={this.state.maxDateVal - 1}
+              defaultValue={0}
+              // aria-labelledby="discrete-slider-restrict"
+              valueLabelDisplay="off"
+              marks={this.state.dates}
+              onChangeCommitted={this.dateSelect.bind(this)}
+            />
+          </div>
         </div>
       </div>
     );
