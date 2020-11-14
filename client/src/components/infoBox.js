@@ -4,9 +4,9 @@ import './infoCircle.css';
 
 /**
  * Component that will display covid cases in a circle
- * @return {InfoCircle}
+ * @return {InfoBox}
  */
-class InfoCircle extends Component {
+class InfoBox extends Component {
   /**
       * Constructor for the InfoCircle components
       * Takes title text and info text as props
@@ -22,22 +22,23 @@ class InfoCircle extends Component {
      */
   render() {
     return (
-      <div className={'infoCircle animate'}
-        style={{width: (10+this.props.data.index),
-          height: (10+this.props.data.index)}}>
-        {/* <div>
+      <div className={'infoBox'}>
+        <div>
           {this.props.data.location}
         </div>
         <div>
-          {this.props.data.cases}
-        </div> */}
+          {'Cases: ' + this.props.data.cases}
+        </div>
+        <div>
+          {'Deaths: ' + this.props.data.deaths}
+        </div>
       </div>
     );
   }
 }
 
-InfoCircle.propTypes = {
+InfoBox.propTypes = {
   data: PropTypes.object,
 };
 
-export default InfoCircle;
+export default InfoBox;

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import GoogleMapReact from 'google-map-react';
 import InfoCircle from './components/infoCircle.js';
+import InfoBox from './components/infoBox.js';
 import googleAPI from './key.json';
 import './App.css';
 
@@ -29,7 +30,7 @@ class App extends Component {
     let index = 0;
     const tmp = [];
     locArray.forEach((location) => {
-      location['type'] = 1;
+      location['type'] = 0;
       location['index'] = index;
       index++;
       tmp.push(location);
@@ -106,6 +107,13 @@ class App extends Component {
             onChildClick={this.handleClick.bind(this)}
           >
             { this.state.locations.map( (location) =>
+                location['type'] ?
+                <InfoBox
+                  lat = {location['lat']}
+                  lng = {location['lng']}
+                  key= {location['id']}
+                  data = {location}
+                />:
               <InfoCircle
                 lat = {location['lat']}
                 lng = {location['lng']}

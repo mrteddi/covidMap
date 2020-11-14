@@ -1,21 +1,17 @@
 .infoCircle {
     color: white;
     background: red;
-    width: 50px;
-    height: 50px;
-    /* padding: 20px 10px; */
     display: inline-block;
     border-radius: 100%;
 }
 
 .infoBox {
     color: white;
-    background: grey;
-    width: 50px;
-    height: 50px;
-    /* padding: 20px 10px; */
+    background: red;
+    width: 100px;
+    height: 100px;
     display: inline-block;
-    border-radius: 100%;
+    border-radius: 15%;
 }
 
 .infoCircle div, .infoBox div {
